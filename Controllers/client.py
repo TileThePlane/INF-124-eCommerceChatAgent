@@ -3,6 +3,11 @@ import sys
 from threading import Thread
 from time import sleep
 
+sys.path.append("../Views")
+
+from agentView import function1
+
+function1()
 
 myname = raw_input('What is your name? ')
 class Client(Handler):
