@@ -26,7 +26,7 @@ class MyHandler(Handler):
             print(counter,msg)
  
  
-port = 8888
+port = 8889
 server = Listener(port, MyHandler)
 print 'Chat Server Started!'
 while 1:

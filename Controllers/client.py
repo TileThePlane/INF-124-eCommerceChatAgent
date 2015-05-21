@@ -5,11 +5,8 @@ from time import sleep
 
 sys.path.append("../Views")
 
-from agentView import function1
+import agentView
 
-function1()
-
-myname = raw_input('What is your name? ')
 class Client(Handler):
     
     def on_close(self):
@@ -24,8 +21,10 @@ class Client(Handler):
         else:
             print msg
         
-host, port = 'localhost', 8888
+host, port = 'localhost', 8889
 client = Client(host, port)
+
+myname = agentView.startClient()
 client.do_send({'join': myname})
 
 def periodic_poll():
@@ -36,8 +35,8 @@ def periodic_poll():
 thread = Thread(target=periodic_poll)
 thread.daemon = True  # die when the main thread dies 
 thread.start()
-print 'Chat Client Started!'
+
 while 1:
-    mytxt = sys.stdin.readline().rstrip()
+    mytxt = agentView.getUserInput()
     client.do_send({'speak': myname, 'txt': mytxt})
     sleep(1)
