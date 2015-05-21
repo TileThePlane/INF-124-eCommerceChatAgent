@@ -16,6 +16,10 @@ class MyHandler(Handler):
         global counter
         if 'speak' in msg.keys():
             counter+=1
+            if msg['type'] == '1':
+                print("client")
+            else:
+                print("agent")
             print(counter,msg['speak']+': '+msg['txt'])
             if msg['txt']=='ping':
                 self.do_send('pong')
