@@ -5,7 +5,7 @@ from time import sleep
 
 sys.path.append("../Views")
 
-import clientView
+import agentView
 
 class Client(Handler):
     
@@ -24,7 +24,7 @@ class Client(Handler):
 host, port = 'localhost', 8889
 client = Client(host, port)
 
-myname = clientView.startClient()
+myname = agentView.startClient()
 client.do_send({'join': myname, 'type':'2'})
 
 def periodic_poll():
@@ -37,7 +37,7 @@ thread.daemon = True  # die when the main thread dies
 thread.start()
 
 while 1:
-    mytxt = clientView.getUserInput()
+    mytxt = agentView.getUserInput()
     #client.do_send({'join' : myname})
     client.do_send({'speak': myname, 'txt': mytxt, 'type':'2'})
     sleep(1)
