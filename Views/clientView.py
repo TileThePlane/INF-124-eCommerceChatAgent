@@ -23,7 +23,7 @@ def startClient():
     else:
       menuSelection = "0"
   print(messageFetcher.fetchMessage(5))
-  return name
+  return {'name': name, 'selection': menuSelection}
 def getUserInput():
   global name
   mytxt = raw_input(name + ': ').rstrip()

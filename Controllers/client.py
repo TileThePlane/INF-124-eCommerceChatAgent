@@ -24,8 +24,12 @@ class Client(Handler):
 host, port = 'localhost', 8889
 client = Client(host, port)
 
-myname = clientView.startClient()
-client.do_send({'join': myname, 'type':'1'})
+clientInfo = clientView.startClient()
+
+myname = clientInfo['name']
+clientSelection = clientInfo['selection']
+
+client.do_send({'join': myname, 'selection': clientSelection, 'type':'1'})
 
 def periodic_poll():
     while 1:
