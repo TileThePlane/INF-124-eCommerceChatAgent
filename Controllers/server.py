@@ -4,7 +4,6 @@ from time import sleep
 handlers = {}  # map client handler to user name
 counter=0
 class MyHandler(Handler):
-    
     def on_open(self):
         pass
          
@@ -13,24 +12,22 @@ class MyHandler(Handler):
      
     def on_msg(self, msg):
         #sleep(2)
-        global counter
         if 'speak' in msg.keys():
-            counter+=1
-            if msg['type'] == '1':
-                print("client")
-            else:
-                print("agent")
-            print(counter,msg['speak']+': '+msg['txt'])
-            if msg['txt']=='ping':
-                self.do_send('pong')
-                print('they said ping')
+            for i in handlers.keys():
+                if i!=self.name:
+                    handlers[i].do_send(msg)
         elif 'join' in msg.keys():
             print(counter,msg['join'] + ' has connected.')
+            handlers[msg['join']] = self
+            self.name = msg['join']
+            print(self.name)
+            print(handlers)
         else:
             print(counter,msg)
+            
  
  
-port = 8889
+port = 8898
 server = Listener(port, MyHandler)
 print 'Chat Server Started!'
 while 1:
