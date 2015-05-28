@@ -18,15 +18,17 @@ class MyHandler(Handler):
                     handlers[i].do_send(msg)
         elif 'join' in msg.keys():
             print(counter,msg['join'] + ' has connected.')
-            if msg['type'] == '1':
-                print("Client connected")
-            else:
-                print("Agent connected")
-
             handlers[msg['join']] = self
             self.name = msg['join']
-            print(self.name)
-            print(handlers)
+            if msg['type'] == '1':
+                print("Client connected")
+                for i in handlers.keys():
+                    if i!=self.name:
+                        handlers[i].do_send(msg)
+            else:
+                print("Agent connected")
+            #print(self.name)
+            #print(handlers)
         else:
             print(counter,msg)
             

@@ -7,6 +7,25 @@ sys.path.append("../Views")
 
 import agentView
 
+clientName = ""
+
+def processClientJoin(msg):
+    global clientName
+    clientName = msg["join"]
+    clientSelection = msg["selection"]
+    if clientSelection == "1":
+        clientSelection = "Ordering Shirts"
+    elif clientSelection == "2":
+        clientSelection = "Questions"
+    elif clientSelection == "3":
+        clientSelection = "Complaints"
+    print("\n==============================")
+    print("Client name: " + clientName + "\nSelection: " + clientSelection)
+    print("==============================")
+def processClientMessage(msg):
+    print("\nClient " + msg['speak'] + ": " + msg["txt"])
+    
+
 class Client(Handler):
     
     def on_close(self):
@@ -19,7 +38,11 @@ class Client(Handler):
                 print 'pong'
                 #self.do_send({'speak': myname, 'txt': 'ping'})
         else:
-            print msg
+            if 'join' in msg.keys():
+                processClientJoin(msg)
+            elif 'speak' in msg.keys():
+                processClientMessage(msg)
+            #print msg
         
 host, port = 'localhost', 8889
 client = Client(host, port)

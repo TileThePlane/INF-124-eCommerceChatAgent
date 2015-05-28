@@ -7,6 +7,9 @@ sys.path.append("../Views")
 
 import clientView
 
+def processAgentMessage(msg):
+    print("\nAgent " + msg['speak'] + ": " + msg["txt"])
+
 class Client(Handler):
     
     def on_close(self):
@@ -19,7 +22,8 @@ class Client(Handler):
                 print 'pong'
                 #self.do_send({'speak': myname, 'txt': 'ping'})
         else:
-            print msg
+            if 'speak' in msg.keys():
+                processAgentMessage(msg)
         
 host, port = 'localhost', 8889
 client = Client(host, port)

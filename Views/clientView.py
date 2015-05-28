@@ -26,5 +26,5 @@ def startClient():
   return {'name': name, 'selection': menuSelection}
 def getUserInput():
   global name
-  mytxt = raw_input(name + ': ').rstrip()
+  mytxt = raw_input().rstrip()
   return mytxt

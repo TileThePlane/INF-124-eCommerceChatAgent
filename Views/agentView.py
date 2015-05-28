@@ -14,5 +14,5 @@ def startClient():
   return name
 def getUserInput():
   global name
-  mytxt = raw_input("Agent " + name + ': ').rstrip()
+  mytxt = raw_input().rstrip()
   return mytxt
