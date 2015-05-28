@@ -25,7 +25,7 @@ host, port = 'localhost', 8889
 client = Client(host, port)
 
 myname = clientView.startClient()
-client.do_send({'join': myname, 'type':'1'})
+client.do_send({'join': myname, 'type':'2'})
 
 def periodic_poll():
     while 1:
@@ -39,5 +39,5 @@ thread.start()
 while 1:
     mytxt = clientView.getUserInput()
     #client.do_send({'join' : myname})
-    client.do_send({'speak': myname, 'txt': mytxt, 'type':'1'})
+    client.do_send({'speak': myname, 'txt': mytxt, 'type':'2'})
     sleep(1)

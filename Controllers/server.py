@@ -18,6 +18,11 @@ class MyHandler(Handler):
                     handlers[i].do_send(msg)
         elif 'join' in msg.keys():
             print(counter,msg['join'] + ' has connected.')
+            if msg['type'] == '1':
+                print("Client connected")
+            else:
+                print("Agent connected")
+
             handlers[msg['join']] = self
             self.name = msg['join']
             print(self.name)
@@ -27,7 +32,7 @@ class MyHandler(Handler):
             
  
  
-port = 8898
+port = 8889
 server = Listener(port, MyHandler)
 print 'Chat Server Started!'
 while 1:
