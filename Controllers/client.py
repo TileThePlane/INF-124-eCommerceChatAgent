@@ -5,10 +5,19 @@ from time import sleep
 
 sys.path.append("../Views")
 
+
 import clientView
 
+
+log = ""
+def writeLog(input):
+	global log
+	log += "\n"+input
+
+
 def processAgentMessage(msg):
-    print("\nAgent " + msg['speak'] + ": " + msg["txt"])
+    print("Agent " + msg['speak'] + ": " + msg["txt"])
+    writeLog("Agent " + msg['speak'] + ": " + msg["txt"])
 
 class Client(Handler):
     
@@ -45,14 +54,22 @@ thread = Thread(target=periodic_poll)
 thread.daemon = True  # die when the main thread dies 
 thread.start()
 
+def writeToFile( str ):
+		f = open('chatlog.txt','a')
+		f.write(str)
+		f.close()
+
+
 while 1:
     mytxt = clientView.getUserInput()
+    writeLog("Client " + myname + ": " + mytxt)
     if mytxt==":q":
         print 'quitting'
         client.do_close()
         break
     elif mytxt==":s":
         print 'saving a log file'
-    #client.do_send({'join' : myname})
-    client.do_send({'speak': myname, 'txt': mytxt, 'type':'1'})
-    sleep(1)
+        writeToFile(log)
+    else:
+        client.do_send({'speak': myname, 'txt': mytxt, 'type':'1'})
+        sleep(1)
