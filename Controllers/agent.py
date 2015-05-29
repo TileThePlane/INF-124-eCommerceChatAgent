@@ -61,6 +61,11 @@ thread.start()
 
 while 1:
     mytxt = agentView.getUserInput()
-    #client.do_send({'join' : myname})
+    if mytxt==":q":
+	print 'quitting'
+	client.do_close()
+        break
+    elif mytxt==":s":
+	print 'saving a log file'
     client.do_send({'speak': myname, 'txt': mytxt, 'type':'2'})
     sleep(1)
