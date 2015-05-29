@@ -25,7 +25,8 @@ class Client(Handler):
             if 'speak' in msg.keys():
                 processAgentMessage(msg)
         
-host, port = 'localhost', 8889
+host = raw_input("Enter host IP address: ")
+port = int(raw_input("Enter Port #:"))
 client = Client(host, port)
 
 clientInfo = clientView.startClient()

@@ -44,8 +44,9 @@ class Client(Handler):
                 processClientMessage(msg)
             #print msg
         
-host, port = 'localhost', 8889
-client = Client(host, port)
+host = raw_input("Enter host IP address: ")
+port = int(raw_input("Enter Port #:"))
+client = Client(host,port)
 
 myname = agentView.startClient()
 client.do_send({'join': myname, 'type':'2'})
