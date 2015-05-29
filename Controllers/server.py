@@ -34,7 +34,8 @@ class MyHandler(Handler):
             
  
  
-port = 8889
+port = int(raw_input("Enter Port #:"))
+
 server = Listener(port, MyHandler)
 print 'Chat Server Started!'
 while 1:
