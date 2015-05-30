@@ -1,7 +1,4 @@
-import sys
-sys.path.append("../Models")
-
-import preLoadedMessages
-
+import Models.preLoadedMessages
+from Models import preLoadedMessages
 def fetchMessage(messageCode):
   return preLoadedMessages.getPreloadedMessages(messageCode)

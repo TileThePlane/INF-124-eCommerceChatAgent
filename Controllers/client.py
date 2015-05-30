@@ -3,11 +3,7 @@ import sys
 from threading import Thread
 from time import sleep
 
-sys.path.append("../Views")
-
-
-import clientView
-
+from Views import clientView
 
 log = ""
 def writeLog(input):

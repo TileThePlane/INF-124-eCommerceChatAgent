@@ -3,9 +3,7 @@ import sys
 from threading import Thread
 from time import sleep
 
-sys.path.append("../Views")
-
-import agentView
+from Views import agentView
 
 clientName = ""
 

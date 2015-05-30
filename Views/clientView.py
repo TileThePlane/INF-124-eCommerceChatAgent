@@ -1,8 +1,5 @@
 #printStuff
-import sys
-sys.path.append("../Controllers")
-
-import messageFetcher
+from Controllers import messageFetcher
 
 name = ""
 
