@@ -1,6 +1,3 @@
-import sys
-
-
 messages = ["Welcome to Socks and Shirts!", #Code: 0
  "What is your name? ", #Code: 1
  "Thank you, ", #Code: 2
