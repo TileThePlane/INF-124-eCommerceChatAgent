@@ -25,3 +25,18 @@ def getUserInput():
   global name
   mytxt = raw_input().rstrip()
   return mytxt
+def processMessage(msg):
+  print("Agent " + msg['speak'] + ": " + msg["txt"])
+def connectionClosed():
+  print 'Connection to Server Lost. Quitting'
+def processInput(selection):
+  if selection == 0:
+    print 'quitting'
+  elif selection == 1:
+    print 'saving a log file'
+  elif selection == 2:
+    print(messageFetcher.fetchMessage(8))
+def processNetworkSettings():
+  host = raw_input("Enter host IP address: ")
+  port = int(raw_input("Enter Port #:"))
+  return {"host": host, "port": port}

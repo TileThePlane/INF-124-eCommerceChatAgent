@@ -5,7 +5,7 @@ from time import sleep
 
 from Views import agentView
 from Models import preLoadedMessages
-clientName = ""
+
 myname=""
 log=""
 def writeLog(input):
@@ -17,46 +17,25 @@ def writeToFile( str ):
     f.write(str)
     f.close()
 
-def processClientJoin(msg):
-    global clientName
-    clientName = msg["join"]
-    clientSelection = msg["selection"]
-    if clientSelection == "1":
-        clientSelection = "Ordering Shirts"
-    elif clientSelection == "2":
-        clientSelection = "Questions"
-    elif clientSelection == "3":
-        clientSelection = "Complaints"
-    print("\n==============================")
-    print("Client name: " + clientName + "\nSelection: " + clientSelection)
-    print("==============================")
-def processClientMessage(msg):
-    print("Client " + msg['speak'] + ": " + msg["txt"])
-    
-
 class Client(Handler):
     
     def on_close(self):
-        print 'Connection to Server Lost. Quitting'
+        agentView.processDisconnect()
         sys.exit(0)
     
     def on_msg(self, msg):
-        #print 'message was:'+ str(msg) + '\n'
         if msg==type(str):
             if msg=='pong':
                 print 'pong'
-                #self.do_send({'speak': myname, 'txt': 'ping'})
         else:
             if 'join' in msg.keys():
-                processClientJoin(msg)
+                agentView.processJoin(msg)
                 client.do_send({'speak': myname, 'txt': "has entered chat", 'type':'2'})
             elif 'speak' in msg.keys():
-                processClientMessage(msg)
-            #print msg
+                agentView.processMessage(msg)
         
-host = raw_input("Enter host IP address: ")
-port = int(raw_input("Enter Port #:"))
-client = Client(host,port)
+networkSettings = agentView.processNetworkSettings()
+client = Client(networkSettings["host"], networkSettings["port"])
 
 myname = agentView.startClient()
 client.do_send({'join': myname, 'type':'2'})
@@ -73,13 +52,13 @@ thread.start()
 while 1:
     mytxt = agentView.getUserInput()
     if mytxt==":q":
-        print 'quitting'
+        agentView.processInput(0)
         client.do_close()
         break
     elif mytxt==":s":
-        print 'saving a log file'
+        agentView.processInput(1)
         writeToFile(log)
     elif mytxt==":e":
-        print(preLoadedMessages.getPreloadedMessages(8))
+        agentView.processInput(2)
     client.do_send({'speak': myname, 'txt': mytxt, 'type':'2'})
     sleep(1)

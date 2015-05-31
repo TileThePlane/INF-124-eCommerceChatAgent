@@ -16,13 +16,13 @@ def writeToFile( str ):
     f.close()
 
 def processAgentMessage(msg):
-    print("Agent " + msg['speak'] + ": " + msg["txt"])
+    clientView.processMessage(msg)
     writeLog("Agent " + msg['speak'] + ": " + msg["txt"])
 
 class Client(Handler):
     
     def on_close(self):
-        print 'Connection to Server Lost. Quitting'
+        clientView.connectionClosed()
         sys.exit(0)
     
     def on_msg(self, msg):
@@ -34,10 +34,9 @@ class Client(Handler):
         else:
             if 'speak' in msg.keys():
                 processAgentMessage(msg)
-        
-host = raw_input("Enter host IP address: ")
-port = int(raw_input("Enter Port #:"))
-client = Client(host, port)
+
+networkSettings = clientView.processNetworkSettings()
+client = Client(networkSettings["host"], networkSettings["port"])
 
 clientInfo = clientView.startClient()
 
@@ -59,14 +58,14 @@ while 1:
     mytxt = clientView.getUserInput()
     writeLog("Client " + myname + ": " + mytxt)
     if mytxt==":q":
-        print 'quitting'
+        clientView.processInput(0)
         client.do_close()
         break
     elif mytxt==":s":
-        print 'saving a log file'
+        clientView.processInput(1)
         writeToFile(log)
     elif mytxt==":e":
-        print(preLoadedMessages.getPreloadedMessages(8))
+        clientView.processInput(2)
     else:
         client.do_send({'speak': myname, 'txt': mytxt, 'type':'1'})
         sleep(1)
