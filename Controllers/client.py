@@ -22,7 +22,8 @@ def processAgentMessage(msg):
 class Client(Handler):
     
     def on_close(self):
-        pass
+        print 'Connection to Server Lost. Quitting'
+        sys.exit(0)
     
     def on_msg(self, msg):
         #print 'message was:'+ str(msg) + '\n'
