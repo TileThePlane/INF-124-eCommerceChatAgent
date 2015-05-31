@@ -6,7 +6,7 @@ from time import sleep
 from Views import agentView
 from Models import preLoadedMessages
 clientName = ""
-
+myname=""
 log=""
 def writeLog(input):
     global log
@@ -31,7 +31,7 @@ def processClientJoin(msg):
     print("Client name: " + clientName + "\nSelection: " + clientSelection)
     print("==============================")
 def processClientMessage(msg):
-    print("\nClient " + msg['speak'] + ": " + msg["txt"])
+    print("Client " + msg['speak'] + ": " + msg["txt"])
     
 
 class Client(Handler):
@@ -48,6 +48,7 @@ class Client(Handler):
         else:
             if 'join' in msg.keys():
                 processClientJoin(msg)
+                client.do_send({'speak': myname, 'txt': "has entered chat", 'type':'2'})
             elif 'speak' in msg.keys():
                 processClientMessage(msg)
             #print msg
