@@ -4,12 +4,16 @@ from threading import Thread
 from time import sleep
 
 from Views import clientView
-
+from Models import preLoadedMessages
 log = ""
 def writeLog(input):
-	global log
-	log += "\n"+input
+    global log
+    log += "\n"+input
 
+def writeToFile( str ):
+    f = open('chatlog.txt','a')
+    f.write(str)
+    f.close()
 
 def processAgentMessage(msg):
     print("Agent " + msg['speak'] + ": " + msg["txt"])
@@ -50,12 +54,6 @@ thread = Thread(target=periodic_poll)
 thread.daemon = True  # die when the main thread dies 
 thread.start()
 
-def writeToFile( str ):
-		f = open('chatlog.txt','a')
-		f.write(str)
-		f.close()
-
-
 while 1:
     mytxt = clientView.getUserInput()
     writeLog("Client " + myname + ": " + mytxt)
@@ -66,6 +64,8 @@ while 1:
     elif mytxt==":s":
         print 'saving a log file'
         writeToFile(log)
+    elif mytxt==":e":
+        print(preLoadedMessages.getPreloadedMessages(8))
     else:
         client.do_send({'speak': myname, 'txt': mytxt, 'type':'1'})
         sleep(1)

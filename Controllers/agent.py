@@ -4,8 +4,18 @@ from threading import Thread
 from time import sleep
 
 from Views import agentView
-
+from Models import preLoadedMessages
 clientName = ""
+
+log=""
+def writeLog(input):
+    global log
+    log += "\n"+input
+
+def writeToFile( str ):
+    f = open('chatlog.txt','a')
+    f.write(str)
+    f.close()
 
 def processClientJoin(msg):
     global clientName
@@ -66,5 +76,8 @@ while 1:
         break
     elif mytxt==":s":
         print 'saving a log file'
+        writeToFile(log)
+    elif mytxt==":e":
+        print(preLoadedMessages.getPreloadedMessages(8))
     client.do_send({'speak': myname, 'txt': mytxt, 'type':'2'})
     sleep(1)
