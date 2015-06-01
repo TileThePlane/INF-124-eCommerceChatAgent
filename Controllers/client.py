@@ -68,4 +68,3 @@ while 1:
         clientView.processInput(2)
     else:
         client.do_send({'speak': myname, 'txt': mytxt, 'type':'1'})
-        sleep(1)

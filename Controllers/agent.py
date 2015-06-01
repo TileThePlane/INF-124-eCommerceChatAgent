@@ -60,5 +60,5 @@ while 1:
         writeToFile(log)
     elif mytxt==":e":
         agentView.processInput(2)
-    client.do_send({'speak': myname, 'txt': mytxt, 'type':'2'})
-    sleep(1)
+    else:
+        client.do_send({'speak': myname, 'txt': mytxt, 'type':'2'})
